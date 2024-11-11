@@ -1,97 +1,105 @@
-
-
 public class ATM {
-    private int balance;
-    private int pin;
+    private int balance;  // Variable to store the ATM balance
+    private int pin;      // Variable to store the user's PIN
 
-    public ATM(int balance,int pin){
-        this.balance=balance;
-        this.pin=pin;
-
+    // Constructor to initialize ATM with a balance and a PIN
+    public ATM(int balance, int pin) {
+        this.balance = balance;  // Initialize the balance
+        this.pin = pin;          // Initialize the PIN
     }
 
-    public void displayMenu()
-    {
+    // Method to display the menu options
+    public void displayMenu() {
         System.out.println("1: Check Balance");
-        System.err.println("2: Deposit");
-        System.err.println("3: Withdrawal");
-        System.err.println("4: Change Pin");
-        System.err.println("5: Exit");
+        System.out.println("2: Deposit");
+        System.out.println("3: Withdrawal");
+        System.out.println("4: Change Pin");
+        System.out.println("5: Exit");
     }
-    public void deposit(int amount){
-        balance+=amount;
-    
-}
 
-public void withdraw(int amount){
-    if(balance<amount){
-        System.err.println("Insufficient Funds");
-        return;
+    // Method to deposit money into the ATM balance
+    public void deposit(int amount) {
+        balance += amount;  // Add the amount to the balance
     }
-    balance-=amount;
-}
 
-public int getBalance(){
-    return balance;
+    // Method to withdraw money from the ATM balance
+    public void withdraw(int amount) {
+        if (balance < amount) {  // Check if there are sufficient funds
+            System.err.println("Insufficient Funds");  // Error message if insufficient funds
+            return;
+        }
+        balance -= amount;  // Deduct the amount from the balance
+    }
 
-}
-public boolean validatePin(int pin)
-{
-    return this.pin==pin;
-}
+    // Getter method to get the current balance of the ATM
+    public int getBalance() {
+        return balance;  // Return the current balance
+    }
 
-public void changePin(int newPin)
-{
-    pin=newPin;
-    System.out.println("Pin Changed");
-}
+    // Method to validate if the entered PIN matches the stored PIN
+    public boolean validatePin(int pin) {
+        return this.pin == pin;  // Return true if the entered PIN matches, false otherwise
+    }
 
+    // Method to change the ATM's PIN
+    public void changePin(int newPin) {
+        pin = newPin;  // Set the new PIN
+        System.out.println("Pin Changed");  // Inform the user that the PIN was successfully changed
+    }
 
-
+    // Main method where the ATM program runs
     public static void main(String[] args) {
-        ATM atm = new ATM(1000,1234);
+        ATM atm = new ATM(1000, 1234);  // Create an ATM object with an initial balance of 1000 and PIN 1234
+
+        // Prompt user to enter their PIN
         System.err.println("Enter the Pin");
-        int pin = Integer.parseInt(System.console().readLine());
-        if(atm.validatePin(pin)){
-            atm.displayMenu();
-            int option = 0;
-            while(option!=5){
-                atm.displayMenu();
-                option =Integer.parseInt(System.console().readLine());
-                switch (option){
-                    case 1:
-                    System.out.println("Balance: "+atm.getBalance());
-                    break;
+        int pin = Integer.parseInt(System.console().readLine());  // Read and parse the user's entered PIN
 
-                    case 2:
-                    System.out.print1("Enter Amount: ");
-                    int amount = Integer.parseInt(System.console().readLine());
-                    atm.deposit(amount);
-                    break;
+        // Validate the entered PIN
+        if (atm.validatePin(pin)) {
+            atm.displayMenu();  // Display the menu if the PIN is correct
 
-                    case 3:
-                    System.out.print("Enter Amount");
-                    amount = Integer.parseInt(System.console().readLine());
-                    atm.withdraw(amount);
-                    break;
+            int option = 0;  // Variable to store the user's menu option
 
-                    case 4:
-                    System.out.print("Enter New Pin:");
-                    int newPin = Integer.parseInt(System.console().readLine());
-                    atm.changePin(newPin);
-                    break;
+            // Loop to allow the user to perform operations until they choose to exit
+            while (option != 5) {
+                atm.displayMenu();  // Display the menu again for each loop iteration
+                option = Integer.parseInt(System.console().readLine());  // Read and parse the user's option
 
-                    case 5:
-                    System.out.println("Thank You for Using ATM!");
-                    break;
+                // Switch-case to handle different menu options
+                switch (option) {
+                    case 1:  // Check Balance
+                        System.out.println("Balance: " + atm.getBalance());  // Display the current balance
+                        break;
 
-                    default:
-                    break;
+                    case 2:  // Deposit money
+                        System.out.print("Enter Amount: ");  // Prompt user for deposit amount
+                        int amount = Integer.parseInt(System.console().readLine());  // Read the deposit amount
+                        atm.deposit(amount);  // Call the deposit method to add the money to the balance
+                        break;
+
+                    case 3:  // Withdraw money
+                        System.out.print("Enter Amount: ");  // Prompt user for withdrawal amount
+                        amount = Integer.parseInt(System.console().readLine());  // Read the withdrawal amount
+                        atm.withdraw(amount);  // Call the withdraw method to deduct the money from the balance
+                        break;
+
+                    case 4:  // Change PIN
+                        System.out.print("Enter New Pin: ");  // Prompt user for a new PIN
+                        int newPin = Integer.parseInt(System.console().readLine());  // Read the new PIN
+                        atm.changePin(newPin);  // Call the changePin method to update the PIN
+                        break;
+
+                    case 5:  // Exit the program
+                        System.out.println("Thank You for Using ATM!");  // Display exit message
+                        break;
+
+                    default:  // If the user enters an invalid option, do nothing
+                        break;
                 }
             }
-        }
-        else{
-            System.out.println("You have entered Invalid Pin!");
+        } else {  // If the entered PIN is incorrect
+            System.out.println("You have entered Invalid Pin!");  // Display an error message
         }
     }
 }
